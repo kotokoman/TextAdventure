@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+//header para criação da classe do inimgo
+
 using namespace std;
 
 class Enemy {

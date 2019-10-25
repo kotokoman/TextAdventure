@@ -11,10 +11,12 @@
 
 using namespace std;
 
-Player player;
-Enemy enemy;
+Player player;    //
+Enemy enemy;      // instancia para classes de player e inimigo
 
-void login() { //função de login para guardar nome do jogador e iniciar valores
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LOGIN----------------------
+
+void login() { //função de login para guardar nome do jogador e resetar atributos do jogador
 
 	system("cls");
 
@@ -31,12 +33,14 @@ void login() { //função de login para guardar nome do jogador e iniciar valores
 	
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ENEMYSORTER----------------
+
 void enemySorter() { //função para sortear 1 entre 4 monstros com suas respectivas vidas.
 	int ind;
 
 	string enemies[4] = { "Goblin", "Kobold", "Skeleton", "Naga"};
 
-	ind = rand() % 3;
+	ind = rand() % 3;   //randomiza o indice do vetor 'enemies'
 
 	enemy.name = enemies[ind];
 
@@ -55,11 +59,12 @@ void enemySorter() { //função para sortear 1 entre 4 monstros com suas respectiv
 		break;
 	}
 
-	enemy.enemyAlive = true;
+	enemy.enemyAlive = true;     // seta o inimigo para vivo
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------GAMEOVER-------------------
 
-void gameOver() { // tela de game over para retornar para o menu principal
+void gameOver() {     // tela de final de jogo quando o player morre. encerra o jogo
 
 	system("cls");
 
@@ -74,18 +79,22 @@ void gameOver() { // tela de game over para retornar para o menu principal
 
 }
 
-void gameEnded(){
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------GAMEENDED------------------
+
+void gameEnded(){    // tela de final de jogo para quando o jogador encontra uma chave e desbloqueia a porta secreta. encerra o jogo
 
 	system("cls");
 
 	cout <<
-		"lore lore lore lore lore lore lore lore "
+		"lore lore lore lore lore lore lore lore \n\n\n"
 		"Press ANY KEY to return to the Main Menu";
 
 	_getch();
 	exit(0);
 
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LOADING--------------------
 
 void loading() { //sistema fake de loading
 
@@ -112,12 +121,14 @@ void loading() { //sistema fake de loading
 
 }
 
-int UIupdater(int playerDamage, int enemyDamage) { //recebe os parametros de dano do personagem e do inimigo e desconta das vidas respectivas
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------HEALTHUPDATER--------------
+
+int healthUpdater(int playerDamage, int enemyDamage) { //recebe os parametros de dano do personagem e do inimigo e desconta das vidas respectivas
 
 	player.health -= enemyDamage;
 	enemy.health -= playerDamage;
 
-	if (enemy.enemyAlive == false) {
+	if (enemy.enemyAlive == false) {   //reseta a UI caso o inimigo morra
 		enemy.name = "";
 		enemy.health = 0;
 	}
@@ -126,7 +137,9 @@ int UIupdater(int playerDamage, int enemyDamage) { //recebe os parametros de dan
 	
 }
 
-void UI() { //loader que desenha a UI para o usuario
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------UI-------------------------
+
+void UI() { //loader que desenha e atualiza a UI para o usuario
 
 	cout <<
 		"|----------------------------------------------------------|\n"
@@ -139,19 +152,21 @@ void UI() { //loader que desenha a UI para o usuario
 		"|----------------------------------------------------------|\n\n";
 }
 
-void enemyDrop() { // função para verificar o drop do inimigo
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ENEMYDROP------------------
+
+void enemyDrop() { // função para verificar o que o inimigo vai dropar aleatoriamente quando morrer
 
 	system("cls");
 
-	UIupdater(0,0);
-	UI();
+	healthUpdater(0,0);   //reseta o nome e hp do inimigo
+	UI();                //atualiza a UI
 
 	cout <<
 		"CONGRATULATIONS ! YOU KILLED THE ENEMY !\n\n";
 
 	int droprand = rand() % 98 + 1;
 
-	if (player.key == 0) {
+	if (player.key == 0) {  // drops se o player ainda não tiver a chave
 
 		if (droprand <= 45) {
 			cout <<
@@ -182,7 +197,7 @@ void enemyDrop() { // função para verificar o drop do inimigo
 		}
 	}
 
-	else if (player.key == 1) {
+	else if (player.key == 1) {      // drops se o player já tiver a chave
 
 		if (droprand > 0 && droprand <= 50) {
 			cout <<
@@ -205,7 +220,9 @@ void enemyDrop() { // função para verificar o drop do inimigo
 
 }
 
-void Credits() { //tela de creditos
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------CREDITS--------------------
+
+void Credits() { //tela de creditos do menu principal
 
 	system("cls");
 
@@ -223,128 +240,154 @@ void Credits() { //tela de creditos
 
 }
 
-void Gameplay_Combat_Enemy() {
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------COMBAT_ENEMY---------------
+
+void Gameplay_Combat_Enemy() {    //função que executa o turno de combate do inimigo
 
 	system("cls");
 
-	string combatOption;
-
-	int random, dmg;
-	srand(time(NULL));
+	int hitRandom, enemyDMG;
 
 	UI();
+
 	cout <<
 		"Enemy attacking . . .";
-	Sleep(2000);
+	Sleep(1000);
 	cout <<
 		"\n. . .";
-	Sleep(1000);
-	random = rand() % 10;
+	Sleep(700);
+
+	hitRandom = rand() % 10;  //randomiza a chance do inimigo acertar ou não o golpe no player
 	
 
-	if (random < 6) {
-		dmg = rand() % 14 + 1;
-		UIupdater(0, dmg);
+	if (hitRandom < 6) {
+
+		enemyDMG = rand() % 14 + 1;    // randomiza o dano do inimigo de 1 a 15
+
+		healthUpdater(0, enemyDMG);      //atualiza a vida do jogador com base no dano do inimigo
+
 		cout <<
-			" Your block failed. Enemy hit you by " << dmg << " damage\n\n"
+			" Your block failed. Enemy hit you by " << enemyDMG << " damage\n\n"
 			"Press ANY KEY to continue . . .";
 		_getch();
 
-		if (player.health <= 0) {
+		if (player.health <= 0) {     //se a vida do jogador <= 0, seta jogador para morto e executa a tela de gameover
 
 			player.playerAlive = false;
 			gameOver();
 		}
+
 	}
 
 	else {
+
 		cout <<
 			" Succesfully blocked the enemy attack\n\n"
 			"Press ANY KEY to continue . . .";
 		_getch();
+
 	}
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------COMBAT_PLAYER--------------
+
 void Gameplay_Combat_Player() {
 
-	int random, dmg;
+	int hitRandom, playerDMG;
 	string combatOption;
 
 	do {
+
 		system("cls");
 
 		srand(time(NULL));
 
 		UI();
+
 		cout <<
 			"Type:\n"
 			"	- 'punch' to damage your enemy\n"
 			"	- 'heal' to use a health potion and recover 25 Health\n\n"
 			">";
-		cin >> combatOption;
+		cin >> combatOption;          //pega a opção do jogador (punch ou heal)
 
-		for_each(combatOption.begin(), combatOption.end(), [](char& c) {
-			c = ::tolower(c);
-		});
+		for_each(combatOption.begin(), combatOption.end(), [](char& c) {  //
+			c = ::tolower(c);                                             //
+		});                                                               //  método para percorrer todos os caracteres da variavel combatOption e transformar eles em lower case (minusculo)
 
-		if (combatOption == "punch") {
+		if (combatOption == "punch") {         //se o usuario escolher golpear o inimigo
+
 			cout <<
 				"\nPunching . . .";
-			Sleep(2000);
+			Sleep(1000);
 			cout <<
 				"\n. . .";
-			Sleep(1000);
+			Sleep(700);
 
-			random = rand() % 10;
+			hitRandom = rand() % 10;    //randomiza a sorte do jogador de acertar ou errar o golpe no inimigo
 
-			
+			if (hitRandom < 6) {
 
-			if (random < 6) {
-				dmg = rand() % 14 + 1;
-				UIupdater(dmg, 0);
+				playerDMG = rand() % 14 + 1;          //randomiza o dano do jogador de 1 a 15
+
+				healthUpdater(playerDMG, 0);         //atualiza a vida do inimigo com base no dano do jogador
+
 				cout <<
-					" Succesfully punched the enemy dealing " << dmg << " damage\n\n"
+					" Succesfully punched the enemy dealing " << playerDMG << " damage\n\n"
 					"Press ANY KEY to continue . . .";
 				_getch();
 
-				if (enemy.health <= 0) {
+				if (enemy.health <= 0) {     //se a vida do inimigo <= 0, seta ele para morto e chama a tela para verificar o drop
+
 					enemy.enemyAlive = false;
 					enemyDrop();
+
 				}
 				else {
+
 					Gameplay_Combat_Enemy();
+
 				}
 			}
 
-			else {
+			else { 
+
 				cout <<
 					" The enemy blocked your damage\n\n"
 					"Press ANY KEY to continue . . .";
 				_getch();
 				Gameplay_Combat_Enemy();
+
 			}
 		}
 
-		else if (combatOption == "heal") {
+		else if (combatOption == "heal") {        // se o usuario escolher se curar
 			
-			if (player.potions >= 1 && player.health<100) {
+			if (player.potions >= 1 && player.health<100) {   //verifica o numero de poçoes restantes e se o jogador perdeu vida
 
 				cout <<
 					"\nUsing Health Potion . . .";
-				Sleep(4000);
+				Sleep(2300);
 				cout <<
 					"\n. . .";
-				Sleep(1000);
+				Sleep(700);
+
+
+				//recupera 25 de vida do jogador até 75 de hp. se o hp for maior de 75, calcula a vida restante até a vida maxima do jogador e recupera.
 
 				if (player.health <= 75) {
+
 					player.health += 25;
 					cout <<
 						" Recovered 25 HP\n\n"
 						"Press ANY KEY to continue . . .";
 					_getch();
 					Gameplay_Combat_Enemy();
+
 				}
+
 				else {
+
 					int healthDif = player.healthMax - player.health;
 
 					player.health += healthDif;
@@ -353,91 +396,110 @@ void Gameplay_Combat_Player() {
 						"Press ANY KEY to continue . . .";
 					_getch();
 					Gameplay_Combat_Enemy();
+
 				}
 
 				player.potions -= 1;
+
 			}
 
-			else if (player.health == 100) {
+			else if (player.health == 100) {       // se o player estiver com a vida cheia
+
 				cout <<
 					"\nYour health is full\n\n"
 					"Press ANY KEY to continue . . .";
 				_getch();
 				Gameplay_Combat_Player();
+
 			}
 
-			else {
+			else {       //se o player nao tiver mais poçoes restantes
+
 				cout <<
 					"\nYou have no potions left\n\n"
 					"Press ANY KEY to continue . . .";
 				_getch();
 				Gameplay_Combat_Player();
+
 			}
 			
 		}
 
 		else {
+
 			cout << "\nInvalid Option";
 			Sleep(600);
 			Gameplay_Combat_Player();
+
 		}
-	} while (enemy.enemyAlive == true);
+
+	} while (enemy.enemyAlive == true);        // executar todo o codigo enquanto o inimigo ainda estiver vivo
 }
 
-void walkSorter() {
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------WALKSORTER-----------------
 
-	int rnd, rnd2, qtdPotions;
+void walkSorter() {         // função para sortear o que acontece quando o jogador escolhe caminhar no jogo
 
-	rnd = rand() % 29 + 1;
+	int randomCaminho, randomOpenDoorInside, randomQtdPotions;
 
-	if (rnd <= 10) {
+	randomCaminho = rand() % 29 + 1;    //randomizador de caminhos
+
+	if (randomCaminho <= 10) {      //nao aconteceu/encontrou nada
+
 		cout <<
-			" But nothing happened\n\n"
+			" But you found nothing.\n\n"
 			"Press ANY KEY to continue . . .";
 		_getch();
 		
 	}
-	else if (rnd > 10 && rnd <= 20) {
-		cout <<
-			"You found an open door...";
+	else if (randomCaminho > 10 && randomCaminho <= 20) {   //encontrou uma porta aberta
 
-		rnd2 = rand() % 49 + 1;
+		cout << "You found an open door...";
 
-		if (rnd2 <= 25) {
+		randomOpenDoorInside = rand() % 49 + 1;   //randomizador para definir o que o usuario encontrará ao abrir a porta
+
+		if (randomOpenDoorInside <= 25) {      //encontrou um inimigo
+
 			enemySorter();
 			cout <<
 				" WITH AN ENEMY INSIDE\n\n"
 				"Press ANY KEY to continue . . .";
 			_getch();
 			Gameplay_Combat_Player();
-		}
-		else {
 
-			qtdPotions = rand() % 5 + 1;
+		}
+		else {     //encontrou um baú com poções
+
+			randomQtdPotions = rand() % 5 + 1;       //randomizador de quantidade de poções encontradas
 
 			cout <<
-				" WITH A CHEST INSIDE IT CONTAINING " << qtdPotions << " HEALTH POTIONS\n\n"
+				" WITH A CHEST INSIDE IT CONTAINING " << randomQtdPotions << " HEALTH POTIONS\n\n"
 				"Press ANY KEY to continue . . .";
 			_getch();
 
-			player.potions += qtdPotions;
+			player.potions += randomQtdPotions;
 
 		}
 	}
 
-	else if (rnd > 20) {
+	else if (randomCaminho > 20) {         //encontrou uma porta secreta trancada
+
 		cout <<
 			"YOU FOUND A SECRET DOOR... But it's locked...\n\n"
 			"Press ANY KEY to continue . . .";
 		_getch();
 
-		if (player.key == 1) {
+		if (player.key == 1) {      // se o jogador já tiver a chave termina o jogo
+
 			gameEnded();
+
 		}
+
 	}
 
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------WALK-----------------------
 
 void Gameplay_Walk() {
 
@@ -445,49 +507,57 @@ void Gameplay_Walk() {
 
 		system("cls");
 
-		srand(time(NULL));
-
+		int healthDif;
 		string walkOption;
 		
-		UI();
+		UI();        //atualiza a UI
+
 		cout <<
 			"Type:\n"
 			"	- 'walk' to move forward\n"
 			"	- 'rest' to recover your full health for (missing health/2) seconds.\n\n"
 			">";
-		cin >> walkOption;
+		cin >> walkOption;             // recebe a opção do jogador
 
-		for_each(walkOption.begin(), walkOption.end(), [](char& c) {
-			c = ::tolower(c);
-		});
+		for_each(walkOption.begin(), walkOption.end(), [](char& c) {      //
+			c = ::tolower(c);                                             //
+		});                                                               //  método para percorrer todos os caracteres da variavel walkOption e transformar eles em lower case (minusculo)
 
-		if (walkOption == "walk") {
+		if (walkOption == "walk") {         //se o jogador caminhar, chama a variavel para definir o que acontece
+
 			cout <<
 				"\nWalking . . .";
-			Sleep(2000);
+			Sleep(1000);
 			cout <<
 				"\n. . .";
-			Sleep(1000);
+			Sleep(700);
+
 			walkSorter();
+
 		}
 
-		else if (walkOption == "rest") {
+		else if (walkOption == "rest") {          //se o jogador escolher descansar
 
 			if (player.health < 100) {
 
-				int healthDif = player.healthMax - player.health;
-				for (int i = healthDif / 2; i >= 0; i--) {
+				healthDif = player.healthMax - player.health;     //calcula a diferença de HP para recuperar
+
+				for (int i = healthDif / 2; i >= 0; i--) {        //descansa por (diferença de HP/2) segundos
+
 					system("cls");
 					UI();
 					cout <<
 						"\nResting . . . "<<i<<" Seconds";
 					Sleep(1000);
+
 				}
+
 				cout <<
 					"\n. . .";
-				Sleep(1000);
+				Sleep(700);
 								
-				player.health += healthDif;
+				player.health += healthDif;     //acrescenta na vida do jogador
+
 				cout <<
 					" Recovered " << healthDif << " HP\n\n"
 					"Press ANY KEY to continue . . .";
@@ -496,17 +566,19 @@ void Gameplay_Walk() {
 				
 			}
 
-			else if (player.health == 100) {
+			else if (player.health == 100) {     //não descansa se a vida do jogador estiver cheia
+
 				cout <<
 					"\nYour health is full\n\n"
 					"Press ANY KEY to continue . . .";
 				_getch();
 				Gameplay_Walk();
+
 			}
 
 		}
 
-		else if (walkOption == "fefo" && player.key == 0) {
+		else if (walkOption == "cheatcode" && player.key == 0) {           // código para testes de poção e chave
 			
 			player.potions += 99;
 			player.key += 1;
@@ -520,15 +592,19 @@ void Gameplay_Walk() {
 		}
 
 		else {
+
 			cout << "\nInvalid Option";
 			Sleep(600);
 			Gameplay_Walk();
+
 		}
 
-	} while (player.playerAlive == true && enemy.enemyAlive == false);
+	} while (player.playerAlive == true && enemy.enemyAlive == false);         //executar o codigo enquanto o player estiver vivo e o inimigo morto/não encontrado
 }
 
-void Start() {
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------START----------------------
+
+void Start() {         // função com um pouco de lore do jogo. executado após o usuario escolher a opção 1 no Main Menu. chama o login, conta o lore e chama a gameplay
 
 	loading();
 
@@ -559,10 +635,14 @@ void Start() {
 	Gameplay_Walk();
 }
 
-int main(){
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------MAIN-----------------------
+
+int main(){       //Main Menu que redireciona para as telas de cada opção
+
 	int gameOn = 0, menuChoice = 0;
 
 	do {
+
 		system("cls");
 
 		cout << "                                             TEXT ADVENTURE SENAC\n\n\n";
@@ -592,5 +672,7 @@ int main(){
 			Sleep(600);
 			main();
 		}
-	} while (gameOn == 0);
+
+	} while (gameOn == 0);     // executar o codigo enquanto o jogador não startar o jogo
+
 }

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Player.h"
 
+//inicialização da classe player
+
 Player::Player(string _name, int _health, int _healthMax, int _potions, int _key, bool _playerAlive) {
 
 	name = _name;
