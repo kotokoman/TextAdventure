@@ -1,0 +1,21 @@
+﻿  text_adventure.cpp
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(55,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(216,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(296,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(312,13): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(356,13): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(388,16): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(394,16): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(456,16): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(677,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(693,13): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(709,14): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(715,15): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(729,15): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\text_adventure\text_adventure.cpp(743,15): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+  Gerando código
+  2 of 156 functions ( 1.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finalizada a geração de código
+  text_adventure.vcxproj -> F:\BACKUP NOTE\SENAC\Projects\Repositories\TextAdventure\Text Adventure C++\text_adventure\x64\Release\text_adventure.exe
